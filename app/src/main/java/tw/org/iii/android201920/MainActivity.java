@@ -23,11 +23,19 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata;
+import com.google.firebase.ml.vision.text.FirebaseVisionText;
+import com.google.firebase.ml.vision.text.FirebaseVisionTextRecognizer;
 
 import java.io.File;
 import java.io.Serializable;
@@ -83,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(final int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 111) {
             String dataResult = data.getStringExtra("result");
@@ -100,6 +108,34 @@ public class MainActivity extends AppCompatActivity {
         }else if (requestCode == 333 && resultCode == RESULT_OK){
             Bitmap bmp = BitmapFactory.decodeFile(sdroot.getAbsolutePath() + "/bradiii.jpg");
             img.setImageBitmap(bmp);
+
+            FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bmp);
+            FirebaseVisionImageMetadata metadata = new FirebaseVisionImageMetadata.Builder()
+                    .setWidth(480)   // 480x360 is typically sufficient for
+                    .setHeight(360)  // image recognition
+                    .setFormat(FirebaseVisionImageMetadata.IMAGE_FORMAT_NV21)
+                    .setRotation(FirebaseVisionImageMetadata.ROTATION_0)
+                    .build();
+            FirebaseVisionTextRecognizer textRecognizer = FirebaseVision.getInstance()
+                    .getOnDeviceTextRecognizer();
+
+            Task<FirebaseVisionText> task =  textRecognizer.processImage(image);
+            task.addOnCompleteListener(new OnCompleteListener<FirebaseVisionText>() {
+                @Override
+                public void onComplete(@NonNull Task<FirebaseVisionText> task) {
+                    FirebaseVisionText result = task.getResult();
+                    String text = result.getText();
+                    Log.v("brad", text);
+                }
+            });
+            task.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.v("brad", e.toString());
+                }
+            });
+
+
         }
 
     }
