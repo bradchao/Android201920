@@ -188,6 +188,21 @@ public class MainActivity extends AppCompatActivity {
         bike.upSpeed();
         Log.v("brad", bike.name + ":" + bike.speed);
         myBike.setValue(bike);
+
+
+        myBike.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Bike b2 = dataSnapshot.getValue(Bike.class);
+                Log.v("brad", b2.name + ":" + b2.speed);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 
