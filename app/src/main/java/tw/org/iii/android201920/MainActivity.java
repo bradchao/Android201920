@@ -62,7 +62,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void lightOn(View view) {
+        try {
+            cameraManager.setTorchMode("0", true);
+        }catch (Exception e){
+
+        }
+
     }
     public void lightOff(View view) {
+        try {
+            cameraManager.setTorchMode("0", false);
+        }catch (Exception e){
+
+        }
     }
 }
