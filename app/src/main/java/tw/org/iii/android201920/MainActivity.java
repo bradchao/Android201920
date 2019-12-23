@@ -23,6 +23,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.File;
 import java.util.Set;
 
@@ -66,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         cameraManager = (CameraManager)getSystemService(Context.CAMERA_SERVICE);
         result = findViewById(R.id.result);
         img = findViewById(R.id.img);
+        firebaseListener();
     }
 
     public void scanCode(View view) {
@@ -128,4 +135,45 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         startActivityForResult(intent, 333);
     }
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("message");
+    DatabaseReference myRef2 = database.getReference("light");
+
+    public void test1(View view) {
+        // Write a message to the database
+
+        myRef.setValue("Hello, World!");
+    }
+
+    private void firebaseListener(){
+        myRef2.setValue(false);     // boolean => Boolean
+
+        // Read from the database
+        myRef2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+//                String value = dataSnapshot.getValue(String.class);
+//                Log.v("brad", "Value is: " + value);
+
+                Boolean lightOnOff = dataSnapshot.getValue(Boolean.class);
+                Log.v("brad", "light : " + lightOnOff);
+
+                if (lightOnOff){
+                    lightOn(null);
+                }else{
+                    lightOff(null);
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                //Log.w("brad", "Failed to read value.", error.toException());
+            }
+        });
+    }
+
 }
