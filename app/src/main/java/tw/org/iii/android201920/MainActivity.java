@@ -1,15 +1,20 @@
 package tw.org.iii.android201920;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    private TextView result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init(){
+        result = findViewById(R.id.result);
+    }
 
+    public void scanCode(View view) {
+        Intent intent = new Intent(this,ScanActivity.class);
+        startActivityForResult(intent, 321);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
