@@ -10,12 +10,16 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     private TextView result;
@@ -64,6 +68,13 @@ public class MainActivity extends AppCompatActivity {
             String dataResult = data.getStringExtra("result");
             result.setText(dataResult);
         }else if (requestCode == 222 && resultCode == RESULT_OK){
+            Bundle bundle = data.getExtras();
+//            Set<String> set = bundle.keySet();
+//            for (String key: set){
+//                Log.v("brad", key + " => " + bundle.get(key).toString());
+//            }
+            Bitmap bmp = (Bitmap)(bundle.get("data"));
+            img.setImageBitmap(bmp);
 
         }
 
