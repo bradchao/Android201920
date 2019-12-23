@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.content.Context;
@@ -112,8 +113,14 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, 222);
     }
 
+    private Uri uri;
+
     public void takePic2(View view) {
-        Uri uri = Uri.fromFile(new File(sdroot, "bradiii.jpg"));
+        //Uri uri = Uri.fromFile(new File(sdroot, "bradiii.jpg"));
+
+        uri = FileProvider.getUriForFile(this, getPackageName()+".provider",
+                new File(sdroot, "bradiii.jpg"));
+
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
         startActivityForResult(intent, 333);
