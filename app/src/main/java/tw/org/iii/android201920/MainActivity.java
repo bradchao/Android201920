@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.camera2.CameraManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
             Bitmap bmp = (Bitmap)(bundle.get("data"));
             img.setImageBitmap(bmp);
 
+        }else if (requestCode == 333 && resultCode == RESULT_OK){
         }
 
     }
@@ -110,6 +112,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void takePic2(View view) {
-        
+        Uri uri = Uri.fromFile(new File(sdroot, "bradiii.jpg"));
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        startActivityForResult(intent, 333);
     }
 }
