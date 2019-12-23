@@ -26,8 +26,19 @@
         android:onClick="lightOff"
         android:text="Off"
         />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="takePic1"
+        android:text="Take Pic."
+        />
     <TextView
         android:id="@+id/result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <ImageView
+        android:id="@+id/img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />

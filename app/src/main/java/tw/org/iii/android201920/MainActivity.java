@@ -12,12 +12,15 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private TextView result;
     private CameraManager cameraManager;
+    private ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,18 +49,23 @@ public class MainActivity extends AppCompatActivity {
     private void init(){
         cameraManager = (CameraManager)getSystemService(Context.CAMERA_SERVICE);
         result = findViewById(R.id.result);
+        img = findViewById(R.id.img);
     }
 
     public void scanCode(View view) {
         Intent intent = new Intent(this,ScanActivity.class);
-        startActivityForResult(intent, 321);
+        startActivityForResult(intent, 111);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String dataResult = data.getStringExtra("result");
-        result.setText(dataResult);
+        if (requestCode == 111) {
+            String dataResult = data.getStringExtra("result");
+            result.setText(dataResult);
+        }else if (requestCode == 222 && resultCode == RESULT_OK){
+
+        }
 
     }
 
@@ -75,5 +83,10 @@ public class MainActivity extends AppCompatActivity {
         }catch (Exception e){
 
         }
+    }
+
+    public void takePic1(View view) {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, 222);
     }
 }
