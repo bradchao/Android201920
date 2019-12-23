@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
@@ -73,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         result = findViewById(R.id.result);
         img = findViewById(R.id.img);
         firebaseListener();
+        bikeListener();
     }
 
     public void scanCode(View view) {
@@ -175,5 +177,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    DatabaseReference myBike = database.getReference("bike");
+    private void bikeListener(){
+        Bike bike = new Bike("Brad");
+        bike.upSpeed();
+        bike.upSpeed();
+        bike.upSpeed();
+        bike.upSpeed();
+        Log.v("brad", bike.name + ":" + bike.speed);
+        myBike.setValue(bike);
+    }
+
+
+
 
 }
