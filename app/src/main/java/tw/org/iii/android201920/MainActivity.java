@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.camera2.CameraManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -88,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
             img.setImageBitmap(bmp);
 
         }else if (requestCode == 333 && resultCode == RESULT_OK){
+            Bitmap bmp = BitmapFactory.decodeFile(sdroot.getAbsolutePath() + "/bradiii.jpg");
+            img.setImageBitmap(bmp);
         }
 
     }
