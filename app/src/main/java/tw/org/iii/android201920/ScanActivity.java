@@ -2,6 +2,7 @@ package tw.org.iii.android201920;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -35,7 +36,9 @@ public class ScanActivity extends AppCompatActivity
     }
     @Override
     public void handleResult(Result rawResult) {
-        Log.v("brad", rawResult.getText());
+        Intent intent = new Intent();
+        intent.putExtra("result", rawResult.getText());
+        setResult(0, intent);
         finish();
     }
 }
