@@ -14,6 +14,18 @@
         android:onClick="scanCode"
         android:text="Scan"
         />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="lightOn"
+        android:text="On"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="lightOff"
+        android:text="Off"
+        />
     <TextView
         android:id="@+id/result"
         android:layout_width="wrap_content"

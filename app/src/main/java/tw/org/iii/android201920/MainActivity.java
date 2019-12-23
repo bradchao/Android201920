@@ -7,14 +7,17 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private TextView result;
+    private CameraManager cameraManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init(){
+        cameraManager = (CameraManager)getSystemService(Context.CAMERA_SERVICE);
         result = findViewById(R.id.result);
     }
 
@@ -55,5 +59,10 @@ public class MainActivity extends AppCompatActivity {
         String dataResult = data.getStringExtra("result");
         result.setText(dataResult);
 
+    }
+
+    public void lightOn(View view) {
+    }
+    public void lightOff(View view) {
     }
 }
