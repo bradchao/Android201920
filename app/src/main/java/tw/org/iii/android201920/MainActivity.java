@@ -13,18 +13,21 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     private TextView result;
     private CameraManager cameraManager;
     private ImageView img;
+    private File sdroot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +36,14 @@ public class MainActivity extends AppCompatActivity {
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
+                != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        != PackageManager.PERMISSION_GRANTED) {
 
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CAMERA},
+                        new String[]{Manifest.permission.CAMERA,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,},
                         123);
 
         }else{
@@ -51,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init(){
+        sdroot = Environment.getExternalStorageDirectory();
         cameraManager = (CameraManager)getSystemService(Context.CAMERA_SERVICE);
         result = findViewById(R.id.result);
         img = findViewById(R.id.img);
@@ -99,5 +107,9 @@ public class MainActivity extends AppCompatActivity {
     public void takePic1(View view) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, 222);
+    }
+
+    public void takePic2(View view) {
+        
     }
 }

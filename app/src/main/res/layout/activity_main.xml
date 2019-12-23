@@ -32,6 +32,12 @@
         android:onClick="takePic1"
         android:text="Take Pic."
         />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="takePic2"
+        android:text="Take PicV2"
+        />
     <TextView
         android:id="@+id/result"
         android:layout_width="wrap_content"
