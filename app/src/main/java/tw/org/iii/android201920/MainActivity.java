@@ -180,7 +180,8 @@ public class MainActivity extends AppCompatActivity {
 
     DatabaseReference myBike = database.getReference("bike");
     private void bikeListener(){
-        Bike bike = new Bike("Brad");
+        Bike bike = new Bike();
+        bike.setName("Brad");
         bike.upSpeed();
         bike.upSpeed();
         bike.upSpeed();
